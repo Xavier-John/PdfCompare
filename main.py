@@ -1,18 +1,19 @@
 
-from pdftoimage import pdf2Image
+from pdftoimage import pdf2Image,compareFolders
 from display import plotImage
 from compareImages import comparePages
 
 import os
-PATH = 'master/20220322-emr-PA.pdf'
-TEST_PATH = 'test/20220322emr-PA.pdf'
+PATH = 'master/20220324-emr-AR.pdf'
+TEST_PATH = 'test/20220324emr-AR.pdf'
 
 def main():
     print('start')
     print(os.getcwd())
-    masterList  = pdf2Image(PATH)
-    testList = pdf2Image(TEST_PATH)
-    comparePages(masterList,testList)
+    compareFolders('master/old','test/old')
+    # masterList  = pdf2Image(PATH)
+    # testList = pdf2Image(TEST_PATH)
+    # comparePages(masterList,testList)
 
     # plotImage(masterList[0])
 

@@ -1,6 +1,6 @@
 import cv2
- 
-from display import plotImage
+from matplotlib import pyplot as plt 
+from display import plotImage,DaulplotImage,multiplot
 from compareSSIM import compare_ssim
 import numpy as np
 import imutils
@@ -8,22 +8,37 @@ import imutils
 def compareImage(master,test):
     master = cv2.cvtColor(master,cv2.COLOR_BGR2GRAY)
     test = cv2.cvtColor(test,cv2.COLOR_BGR2GRAY)
-    _,matched = compare_ssim(master,test,full=True)
+    # fig = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
+    # fig = multiplot(test,(1,2,2),fig)
+    _,matched = compare_ssim(master.copy(),test.copy(),full=True)
     # plotImage(matched)
-    defect,_ =postProcessing(matched,master)
+    defect,area =postProcessing(matched,master)
+    if area > 0:
+        # plotImage(defect)
+        # plotImage(master)
+        # DaulplotImage(master,test)
+        # fig2 = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
+        # fig2 = multiplot(test,(1,2,2),fig2)
+        plotImage(defect)
     return defect
 
 def comparePages(masterList,testList):
     for (master,test) in zip(masterList,testList):
+        # plotImage(master)
+        # plotImage(test)
+        # DaulplotImage(master,test)
+        # fig = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
+        # fig = multiplot(test,(1,2,2),fig)
+
         defect = compareImage(master,test)
-        plotImage(defect)
+  
 
 def postProcessing(diff,img2):
     diff = (diff * 255).astype("uint8")
     diff = np.uint8(diff)
     thresh = cv2.threshold(diff, 100, 255,
     cv2.THRESH_BINARY_INV)[1]
-    plotImage(diff)
+    # plotImage(diff)
     cnts = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL,
     cv2.CHAIN_APPROX_SIMPLE)
     cnts = imutils.grab_contours(cnts)
