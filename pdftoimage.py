@@ -24,7 +24,8 @@ def compareFolders(masterFolder,testFolder):
     for masterFile,testFile in zip(masterFileList,testFileList):
         masterList = pdf2Image(masterFile)
         testList = pdf2Image(testFile)
-        if(comparePages(masterList,testList)):
+        print(masterFile,testFile)
+        if(comparePages(masterList,testList,testFile)):
             print("defect")
             with open('out.txt', 'a') as f:
                 f.write(testFile)

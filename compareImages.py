@@ -4,8 +4,9 @@ from display import plotImage,DaulplotImage,multiplot
 from compareSSIM import compare_ssim
 import numpy as np
 import imutils
+import os
 
-def compareImage(master,test):
+def compareImage(master,test,fileName,pageNo):
     master = cv2.cvtColor(master,cv2.COLOR_BGR2GRAY)
     test = cv2.cvtColor(test,cv2.COLOR_BGR2GRAY)
     # fig = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
@@ -14,26 +15,31 @@ def compareImage(master,test):
     # plotImage(matched)
     defect,area =postProcessing(matched,master)
     if area > 0:
+        if not os.path.exists(str(fileName[:-4])):
+            os.makedirs(str(fileName[:-4]))
         # plotImage(defect)
         # plotImage(master)
         # DaulplotImage(master,test)
         # fig2 = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
         # fig2 = multiplot(test,(1,2,2),fig2)
         plotImage(defect)
+        cv2.imwrite(str(fileName[:-4])+'/'+str(pageNo) + '.jpg',defect)
+        
         # fig2 = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
         # fig2 = multiplot(test,(1,2,2),fig2)
     return area
 
-def comparePages(masterList,testList):
+def comparePages(masterList,testList,fileName):
     different = False
+    pageNo = 0
     for (master,test) in zip(masterList,testList):
         # plotImage(master)
         # plotImage(test)
         # DaulplotImage(master,test)
         # fig = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
         # fig = multiplot(test,(1,2,2),fig)
-
-        area = compareImage(master,test)
+        pageNo+= 1
+        area = compareImage(master,test,fileName,pageNo)
         if area > 0:
             different = True
     return different
