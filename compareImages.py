@@ -20,9 +20,12 @@ def compareImage(master,test):
         # fig2 = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
         # fig2 = multiplot(test,(1,2,2),fig2)
         plotImage(defect)
-    return defect
+        # fig2 = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
+        # fig2 = multiplot(test,(1,2,2),fig2)
+    return area
 
 def comparePages(masterList,testList):
+    different = False
     for (master,test) in zip(masterList,testList):
         # plotImage(master)
         # plotImage(test)
@@ -30,7 +33,12 @@ def comparePages(masterList,testList):
         # fig = multiplot(master,(1,2,1),plt.figure(figsize=(64,64)))
         # fig = multiplot(test,(1,2,2),fig)
 
-        defect = compareImage(master,test)
+        area = compareImage(master,test)
+        if area > 0:
+            different = True
+    return different
+
+    
   
 
 def postProcessing(diff,img2):
