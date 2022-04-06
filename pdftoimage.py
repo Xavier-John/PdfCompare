@@ -25,6 +25,11 @@ def compareFolders(masterFolder,testFolder):
         masterList = pdf2Image(masterFile)
         testList = pdf2Image(testFile)
         print(masterFile,testFile)
+        x = masterFile[-7:]
+        y = testFile[-7:]
+        if (x != y):
+            print("\nFile Mismatch")
+            exit()
         if(comparePages(masterList,testList,testFile)):
             print("defect")
             with open('out.txt', 'a') as f:

@@ -10,7 +10,7 @@ TEST_PATH = 'test/20220324emr-AR.pdf'
 def main():
     print('start')
     print(os.getcwd())
-    compareFolders('master/emr22','test/emr22')
+    compareFolders('master/wdt25','test/wdt25')
     # masterList  = pdf2Image(PATH)
     # testList = pdf2Image(TEST_PATH)
     # comparePages(masterList,testList)
